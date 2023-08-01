@@ -27,6 +27,9 @@ while True:
             exit()
         # if event.type == pygame.MOUSEMOTION:
         #     print(event.pos)
+        # if event.type == pygame.KEYDOWN:
+        #     if event.key == pygame.K_SPACE:
+        #         print("Space pressed")
 
     screen.blit(sky_surface, (0, 0))
     screen.blit(ground_surface, (0, 300))
@@ -48,4 +51,9 @@ while True:
 
     if snail_rect.left < -100:
         snail_rect.left = 800
+
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_SPACE]:
+        print("jump")
+
     clock.tick(60)
