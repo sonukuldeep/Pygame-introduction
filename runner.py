@@ -16,10 +16,13 @@ snail_surface = pygame.image.load("assets/graphics/snail/snail1.png").convert_al
 snail_rect = snail_surface.get_rect(midbottom=(600, 300))
 snail_speed = -4
 
+
 player_surface = pygame.image.load(
     "assets/graphics/Player/player_walk_1.png"
 ).convert_alpha()
 player_rect = player_surface.get_rect(midbottom=(80, 300))
+player_gravity = 0
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -27,9 +30,9 @@ while True:
             exit()
         # if event.type == pygame.MOUSEMOTION:
         #     print(event.pos)
-        # if event.type == pygame.KEYDOWN:
-        #     if event.key == pygame.K_SPACE:
-        #         print("Space pressed")
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                if player_rect.bottom == 300: player_gravity = -20
 
     screen.blit(sky_surface, (0, 0))
     screen.blit(ground_surface, (0, 300))
@@ -37,8 +40,11 @@ while True:
     pygame.draw.rect(screen, "#c0e8ec", score_rect, 10)
     screen.blit(score_surface, score_rect)
     screen.blit(snail_surface, snail_rect)
-    screen.blit(player_surface, player_rect)
 
+    player_gravity +=1
+    player_rect.y += player_gravity
+    if player_rect.bottom >= 300: player_rect.bottom = 300
+    screen.blit(player_surface, player_rect)
     # if player_rect.colliderect(snail_rect):
     #     print("collision")
 
@@ -52,8 +58,10 @@ while True:
     if snail_rect.left < -100:
         snail_rect.left = 800
 
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_SPACE]:
-        print("jump")
+    # keys = pygame.key.get_pressed()
+    # if keys[pygame.K_SPACE]:
+    #     print("jump")
+
+    
 
     clock.tick(60)
